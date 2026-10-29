@@ -1,0 +1,2023 @@
+<!DOCTYPE html>
+<html lang="uz" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Savatcha — Bozor ham, bozorlik ham bir joyda!</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          screens: {
+            'xs': '420px',
+          },
+          colors: {
+            brand: {
+              50: '#f0fdf4',
+              100: '#dcfce7',
+              500: '#16a34a',
+              600: '#15803d',
+              700: '#166534',
+            },
+            express: {
+              light: '#fef3c7',
+              base: '#f59e0b',
+              dark: '#b45309',
+            },
+            market: {
+              light: '#ede9fe',
+              base: '#7c3aed',
+              dark: '#5b21b6',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    /* Hide scrollbars while allowing swipe/scroll */
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    /* Animated pulse badge */
+    .badge-pulse {
+      animation: pulse-glow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+    }
+    @keyframes pulse-glow {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.85; transform: scale(1.04); }
+    }
+
+    /* Tap feedback for mobile */
+    .tap-effect:active {
+      transform: scale(0.96);
+    }
+    
+    /* Toast slide animation */
+    @keyframes toast-in {
+      from { transform: translateY(100%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .toast-anim {
+      animation: toast-in 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+  </style>
+</head>
+<body class="bg-[#F6F7F9] text-slate-800 antialiased min-h-screen flex flex-col font-sans pb-20 md:pb-0 select-none sm:select-auto">
+
+  <!-- ==================== TOP ANNOUNCEMENT BAR (DESKTOP & TABLET) ==================== -->
+  <header class="bg-gradient-to-r from-emerald-700 via-teal-700 to-indigo-800 text-white text-xs py-2 px-3 sm:px-4 shadow-sm z-30">
+    <div class="max-w-7xl mx-auto flex items-center justify-between gap-2">
+      <div class="flex items-center gap-2 overflow-hidden text-ellipsis whitespace-nowrap">
+        <span class="bg-amber-400 text-slate-950 font-black px-2 py-0.5 rounded-full text-[10px] uppercase tracking-wider shrink-0">Gibrid Platforma</span>
+        <span class="truncate text-[11px] sm:text-xs">
+          <b>Savatcha:</b> ⚡ 20 daqiqalik oziq-ovqat va 📦 1 kunlik ulkan bozor bir joyda!
+        </span>
+      </div>
+      <div class="hidden sm:flex items-center gap-3 text-xs font-medium shrink-0">
+        <button onclick="openModal('pvzModal')" class="hover:underline flex items-center gap-1 cursor-pointer">
+          <i data-lucide="map-pin" class="w-3.5 h-3.5"></i> 1,450+ PVZ punktlar
+        </button>
+        <button onclick="openModal('nasiyaModal')" class="hover:underline flex items-center gap-1 cursor-pointer bg-white/15 px-2 py-0.5 rounded-lg">
+          <i data-lucide="percent" class="w-3.5 h-3.5 text-amber-300"></i> Nasiya 0-0-12
+        </button>
+        <span class="text-white/40">|</span>
+        <span class="font-bold cursor-pointer">O'zbekcha</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================== MAIN STICKY NAVIGATION ==================== -->
+  <div class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/90 shadow-2xs transition-all">
+    <div class="max-w-7xl mx-auto px-3 sm:px-4 py-2.5 sm:py-3">
+      <div class="flex items-center justify-between gap-2 sm:gap-4 lg:gap-6">
+        
+        <!-- LOGO & MOBILE HAMBURGER -->
+        <div class="flex items-center gap-2">
+          <!-- Mobile Menu trigger -->
+          <button onclick="toggleMobileCatalog()" class="lg:hidden p-2 -ml-1 text-slate-700 hover:text-emerald-600 rounded-xl hover:bg-slate-100 transition tap-effect" aria-label="Katalog menyusi">
+            <i data-lucide="menu" class="w-5 h-5"></i>
+          </button>
+
+          <!-- LOGO -->
+          <a href="#" class="flex items-center gap-2 flex-shrink-0 group">
+            <div class="w-9 h-9 sm:w-11 sm:h-11 rounded-2xl bg-gradient-to-tr from-emerald-600 to-teal-500 flex items-center justify-center text-white shadow-md shadow-emerald-500/20 group-hover:scale-105 transition-transform">
+              <i data-lucide="shopping-bag" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+            </div>
+            <div>
+              <div class="flex items-center gap-1">
+                <span class="text-xl sm:text-2xl font-black tracking-tight text-slate-900 leading-none">savatcha</span>
+                <span class="text-[9px] sm:text-[10px] font-black px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 uppercase">Super</span>
+              </div>
+              <p class="text-[9px] sm:text-[10px] text-slate-400 font-medium hidden xs:block -mt-0.5">Bozor va bozorlik bitta joyda</p>
+            </div>
+          </a>
+        </div>
+
+        <!-- DESKTOP CATALOG BUTTON -->
+        <button onclick="toggleCatalogDropdown()" class="hidden lg:flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-4 py-2.5 rounded-xl transition shadow-sm tap-effect">
+          <i data-lucide="layout-grid" class="w-5 h-5"></i>
+          <span>Katalog</span>
+        </button>
+
+        <!-- SEARCH BAR -->
+        <div class="flex-1 max-w-2xl relative">
+          <div class="relative flex items-center">
+            <input 
+              id="searchInput"
+              type="text" 
+              placeholder="Qidiruv: sut, go'sht, iPhone 16, tilla..." 
+              class="w-full pl-9 sm:pl-11 pr-14 sm:pr-24 py-2 sm:py-2.5 bg-slate-100 hover:bg-slate-50 focus:bg-white border border-transparent focus:border-emerald-500 rounded-xl text-xs sm:text-sm transition outline-none"
+              oninput="handleSearch(this.value)"
+            />
+            <i data-lucide="search" class="w-4 h-4 sm:w-5 sm:h-5 text-slate-400 absolute left-2.5 sm:left-3.5 pointer-events-none"></i>
+            <div class="absolute right-1.5 flex items-center gap-1">
+              <button onclick="clearSearch()" id="clearSearchBtn" class="hidden text-slate-400 hover:text-slate-600 p-1 rounded-full">
+                <i data-lucide="x" class="w-4 h-4"></i>
+              </button>
+              <button onclick="executeSearch()" class="bg-emerald-600 hover:bg-emerald-700 text-white p-1.5 rounded-lg tap-effect">
+                <i data-lucide="arrow-right" class="w-3.5 h-3.5 sm:w-4 sm:h-4"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- DESKTOP ACTIONS -->
+        <div class="hidden md:flex items-center gap-3 lg:gap-4 flex-shrink-0">
+          
+          <!-- Delivery Filter Mode Badge Switches -->
+          <div class="flex items-center bg-slate-100 p-1 rounded-xl text-xs font-semibold">
+            <button onclick="setDeliveryFilter('all')" id="tab-all" class="px-3 py-1.5 rounded-lg transition bg-white text-emerald-800 shadow-xs font-bold tap-effect">Barchasi</button>
+            <button onclick="setDeliveryFilter('express')" id="tab-express" class="px-3 py-1.5 rounded-lg transition text-slate-600 hover:text-amber-700 flex items-center gap-1 tap-effect">
+              <span class="text-amber-500">⚡</span> 20 daqiqa
+            </button>
+            <button onclick="setDeliveryFilter('market')" id="tab-market" class="px-3 py-1.5 rounded-lg transition text-slate-600 hover:text-indigo-700 flex items-center gap-1 tap-effect">
+              <span class="text-indigo-500">📦</span> Ertaga PVZ
+            </button>
+          </div>
+
+          <!-- Favorites desktop -->
+          <button onclick="filterFavorites()" class="relative flex flex-col items-center justify-center p-2 text-slate-700 hover:text-emerald-600 transition rounded-xl hover:bg-slate-50 tap-effect">
+            <i data-lucide="heart" class="w-5 h-5"></i>
+            <span class="text-[10px] font-semibold mt-0.5">Saralangan</span>
+            <span id="favCount" class="hidden absolute top-0.5 right-1 w-4 h-4 bg-rose-500 text-white rounded-full text-[10px] font-bold flex items-center justify-center">0</span>
+          </button>
+
+          <!-- Cart desktop -->
+          <button onclick="toggleCartDrawer()" class="relative flex items-center gap-2.5 bg-emerald-50 hover:bg-emerald-100 text-emerald-900 font-bold px-3.5 py-2 rounded-xl transition border border-emerald-200 tap-effect">
+            <div class="relative">
+              <i data-lucide="shopping-cart" class="w-5 h-5 text-emerald-700"></i>
+              <span id="cartCountBadge" class="absolute -top-2 -right-2.5 w-4 h-4 bg-emerald-600 text-white rounded-full text-[10px] flex items-center justify-center font-black">0</span>
+            </div>
+            <div class="text-left hidden lg:block">
+              <div class="text-[10px] text-emerald-600 font-semibold leading-none">Savat</div>
+              <div id="cartHeaderTotal" class="text-xs font-extrabold text-slate-900">0 so'm</div>
+            </div>
+          </button>
+
+        </div>
+
+        <!-- MOBILE QUICK CART ICON -->
+        <div class="flex items-center md:hidden gap-1">
+          <button onclick="toggleCartDrawer()" class="relative p-2 bg-emerald-50 text-emerald-800 rounded-xl border border-emerald-200 tap-effect" aria-label="Savat">
+            <i data-lucide="shopping-cart" class="w-5 h-5"></i>
+            <span id="mobileCartBadge" class="hidden absolute -top-1 -right-1 w-4 h-4 bg-emerald-600 text-white rounded-full text-[10px] font-bold flex items-center justify-center">0</span>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- MOBILE QUICK MODE TABS -->
+      <div class="flex md:hidden items-center justify-between gap-1.5 mt-2.5 pt-2 border-t border-slate-100 text-xs font-bold">
+        <button onclick="setDeliveryFilter('all')" id="m-tab-all" class="flex-1 py-1.5 rounded-lg bg-emerald-600 text-white text-center transition tap-effect">
+          Barchasi (<span id="m-count-all">0</span>)
+        </button>
+        <button onclick="setDeliveryFilter('express')" id="m-tab-express" class="flex-1 py-1.5 rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 text-center flex items-center justify-center gap-1 transition tap-effect">
+          <span class="text-amber-500">⚡</span> Tezkor (<span id="m-count-express">0</span>)
+        </button>
+        <button onclick="setDeliveryFilter('market')" id="m-tab-market" class="flex-1 py-1.5 rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 text-center flex items-center justify-center gap-1 transition tap-effect">
+          <span class="text-indigo-500">📦</span> Market (<span id="m-count-market">0</span>)
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==================== MAIN CONTENT CONTAINER ==================== -->
+  <main class="max-w-7xl mx-auto px-3 sm:px-4 py-4 sm:py-6 flex-1 w-full space-y-6 sm:space-y-8">
+
+    <!-- HERO PROMO BANNER (RESPONSIVE HYBRID HERO) -->
+    <section class="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4">
+      
+      <!-- Main Dual Hero Card -->
+      <div class="lg:col-span-2 relative overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-br from-slate-950 via-slate-900 to-emerald-950 text-white p-5 sm:p-8 lg:p-10 flex flex-col justify-between shadow-lg">
+        <div class="absolute -right-12 -top-12 w-64 h-64 sm:w-80 sm:h-80 bg-emerald-500/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute right-4 bottom-2 opacity-15 sm:opacity-25 pointer-events-none">
+          <i data-lucide="zap" class="w-48 h-48 sm:w-64 sm:h-64 text-amber-400"></i>
+        </div>
+
+        <div class="relative z-10 space-y-2 sm:space-y-3 max-w-lg">
+          <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 text-[11px] sm:text-xs font-semibold">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 badge-pulse"></span>
+            Korzinka + Uzum Market sintezi
+          </div>
+          <h1 class="text-xl xs:text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight leading-snug sm:leading-tight">
+            Issiq nondan tortib eng so'nggi <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-teal-300 to-amber-300">iPhone 16</span> gacha!
+          </h1>
+          <p class="text-slate-300 text-xs sm:text-sm leading-relaxed">
+            Oziq-ovqatlar <b>20 daqiqada</b> xonadoningizda. Katta bozor mahsulotlari <b>ertaga bepul</b> tarqatish punktlarida (PVZ).
+          </p>
+        </div>
+
+        <div class="relative z-10 pt-4 sm:pt-6 flex flex-wrap gap-2.5 sm:gap-3">
+          <button onclick="setDeliveryFilter('express')" class="flex-1 sm:flex-initial bg-amber-400 hover:bg-amber-500 active:bg-amber-600 text-slate-950 font-extrabold px-4 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm transition flex items-center justify-center gap-1.5 shadow-md tap-effect">
+            <span>⚡ Tezkor Oziq-ovqat</span>
+            <span class="text-[10px] bg-slate-950 text-amber-300 px-1.5 py-0.5 rounded font-mono font-bold">20 daq</span>
+          </button>
+          <button onclick="setDeliveryFilter('market')" class="flex-1 sm:flex-initial bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-extrabold px-4 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm transition flex items-center justify-center gap-1.5 shadow-md tap-effect">
+            <span>📦 Katta Bozor</span>
+            <span class="text-[10px] bg-indigo-900 text-indigo-200 px-1.5 py-0.5 rounded font-mono font-bold">1 kun PVZ</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Side Cards (Nasiya & Quality) -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-3 sm:gap-4">
+        
+        <!-- Nasiya Card -->
+        <div class="rounded-2xl sm:rounded-3xl bg-gradient-to-br from-indigo-700 via-indigo-800 to-purple-900 text-white p-4 sm:p-5 flex flex-col justify-between shadow-md relative overflow-hidden group">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-extrabold uppercase tracking-wider text-indigo-200">Savatcha Nasiya</span>
+            <span class="text-[11px] font-black bg-amber-400 text-slate-950 px-2 py-0.5 rounded-full">0-0-12</span>
+          </div>
+          <div class="my-2">
+            <h3 class="text-base sm:text-lg font-bold leading-tight">Oldindan to'lovsiz, 12 oygacha bo'lib to'lang!</h3>
+            <p class="text-[11px] sm:text-xs text-indigo-100 mt-1">Smartfon, noutbuk va maishiy texnika uchun foizsiz reja.</p>
+          </div>
+          <button onclick="openModal('nasiyaModal')" class="text-xs font-bold bg-white text-indigo-950 py-2 px-3.5 rounded-xl hover:bg-indigo-50 transition w-fit tap-effect">
+            Limitni hisoblash &rarr;
+          </button>
+        </div>
+
+        <!-- Freshness Guarantee Card -->
+        <div class="rounded-2xl sm:rounded-3xl bg-gradient-to-br from-amber-500 via-emerald-600 to-teal-700 text-white p-4 sm:p-5 flex flex-col justify-between shadow-md">
+          <div class="flex items-center justify-between">
+            <span class="text-[11px] font-extrabold uppercase tracking-wider text-amber-100">100% Yangilik Kafolati</span>
+            <i data-lucide="shield-check" class="w-5 h-5 text-white"></i>
+          </div>
+          <div class="my-2">
+            <h3 class="text-base sm:text-lg font-bold leading-tight">Korzinka sifat nazorati</h3>
+            <p class="text-[11px] sm:text-xs text-emerald-50 mt-1">Go'sht, sut va mevalar yangiligiga 100% javob beramiz.</p>
+          </div>
+          <div class="text-[11px] font-semibold text-emerald-100 flex items-center gap-1.5">
+            <i data-lucide="truck" class="w-4 h-4 shrink-0"></i> Ilk 3 ta tezkor yetkazish bepul!
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ==================== HORIZONTAL SCROLLABLE CATEGORIES ==================== -->
+    <section>
+      <div class="flex items-center justify-between mb-3">
+        <h2 class="text-base sm:text-lg font-extrabold text-slate-900 flex items-center gap-2">
+          <span>Ommabop bo'limlar</span>
+          <span class="text-[10px] bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full font-bold">32+ Tovar</span>
+        </h2>
+        <button onclick="resetFilters()" class="text-xs text-emerald-600 font-bold hover:underline">
+          Hammasini ko'rish
+        </button>
+      </div>
+
+      <!-- Responsive Categories Carousel / Grid -->
+      <div class="flex items-center gap-2 sm:gap-3 overflow-x-auto no-scrollbar pb-2 -mx-3 px-3 sm:mx-0 sm:px-0">
+        
+        <button onclick="filterByCategory('Barchasi')" class="cat-pill shrink-0 px-3.5 py-2 rounded-xl bg-emerald-600 text-white text-xs font-bold transition shadow-xs flex items-center gap-1.5 tap-effect" data-cat="Barchasi">
+          <span>✨</span>
+          <span>Barchasi</span>
+        </button>
+
+        <button onclick="filterByCategory('Oziq-ovqat')" class="cat-pill shrink-0 px-3.5 py-2 rounded-xl bg-white hover:bg-emerald-50 border border-slate-200/90 text-slate-700 hover:text-emerald-700 text-xs font-bold transition shadow-2xs flex items-center gap-1.5 tap-effect" data-cat="Oziq-ovqat">
+          <span>🍎</span>
+          <span>Oziq-ovqat</span>
+          <span class="text-[9px] bg-amber-100 text-amber-900 px-1 rounded">20 daq</span>
+        </button>
+
+        <button onclick="filterByCategory('Go\'sht va Sut')" class="cat-pill shrink-0 px-3.5 py-2 rounded-xl bg-white hover:bg-emerald-50 border border-slate-200/90 text-slate-700 hover:text-emerald-700 text-xs font-bold transition shadow-2xs flex items-center gap-1.5 tap-effect" data-cat="Go'sht va Sut">
+          <span>🥩</span>
+          <span>Go'sht & Sut</span>
+          <span class="text-[9px] bg-amber-100 text-amber-900 px-1 rounded">20 daq</span>
+        </button>
+
+        <button onclick="filterByCategory('Elektronika')" class="cat-pill shrink-0 px-3.5 py-2 rounded-xl bg-white hover:bg-indigo-50 border border-slate-200/90 text-slate-700 hover:text-indigo-700 text-xs font-bold transition shadow-2xs flex items-center gap-1.5 tap-effect" data-cat="Elektronika">
+          <span>📱</span>
+          <span>Elektronika</span>
+          <span class="text-[9px] bg-indigo-100 text-indigo-900 px-1 rounded">PVZ</span>
+        </button>
+
+        <button onclick="filterByCategory('Maishiy texnika')" class="cat-pill shrink-0 px-3.5 py-2 rounded-xl bg-white hover:bg-indigo-50 border border-slate-200/90 text-slate-700 hover:text-indigo-700 text-xs font-bold transition shadow-2xs flex items-center gap-1.5 tap-effect" data-cat="Maishiy texnika">
+          <span>☕</span>
+          <span>Maishiy texnika</span>
+          <span class="text-[9px] bg-indigo-100 text-indigo-900 px-1 rounded">PVZ</span>
+        </button>
+
+        <button onclick="filterByCategory('Kiyim va Poyabzal')" class="cat-pill shrink-0 px-3.5 py-2 rounded-xl bg-white hover:bg-pink-50 border border-slate-200/90 text-slate-700 hover:text-pink-700 text-xs font-bold transition shadow-2xs flex items-center gap-1.5 tap-effect" data-cat="Kiyim va Poyabzal">
+          <span>👟</span>
+          <span>Kiyim & Poyabzal</span>
+          <span class="text-[9px] bg-pink-100 text-pink-900 px-1 rounded">Sinash</span>
+        </button>
+
+        <button onclick="filterByCategory('Uy va Oshxona')" class="cat-pill shrink-0 px-3.5 py-2 rounded-xl bg-white hover:bg-amber-50 border border-slate-200/90 text-slate-700 hover:text-amber-700 text-xs font-bold transition shadow-2xs flex items-center gap-1.5 tap-effect" data-cat="Uy va Oshxona">
+          <span>🍳</span>
+          <span>Uy & Oshxona</span>
+        </button>
+
+        <button onclick="filterByCategory('Tozalik va Kimyo')" class="cat-pill shrink-0 px-3.5 py-2 rounded-xl bg-white hover:bg-teal-50 border border-slate-200/90 text-slate-700 hover:text-teal-700 text-xs font-bold transition shadow-2xs flex items-center gap-1.5 tap-effect" data-cat="Tozalik va Kimyo">
+          <span>🧴</span>
+          <span>Tozalik & Kimyo</span>
+        </button>
+
+        <button onclick="filterByCategory('Go\'zallik')" class="cat-pill shrink-0 px-3.5 py-2 rounded-xl bg-white hover:bg-purple-50 border border-slate-200/90 text-slate-700 hover:text-purple-700 text-xs font-bold transition shadow-2xs flex items-center gap-1.5 tap-effect" data-cat="Go'zallik">
+          <span>💄</span>
+          <span>Go'zallik</span>
+        </button>
+
+        <button onclick="filterByCategory('Avto va Asboblar')" class="cat-pill shrink-0 px-3.5 py-2 rounded-xl bg-white hover:bg-slate-100 border border-slate-200/90 text-slate-700 text-xs font-bold transition shadow-2xs flex items-center gap-1.5 tap-effect" data-cat="Avto va Asboblar">
+          <span>🚗</span>
+          <span>Avto & Asboblar</span>
+        </button>
+
+      </div>
+    </section>
+
+    <!-- ==================== CONTROLS & FILTER BAR ==================== -->
+    <section class="bg-white rounded-2xl p-3 sm:p-4 border border-slate-200/90 shadow-2xs flex flex-col md:flex-row items-center justify-between gap-3">
+      
+      <div class="w-full md:w-auto flex items-center justify-between md:justify-start gap-3">
+        <div>
+          <h2 class="text-sm sm:text-base font-black text-slate-900" id="currentSectionTitle">Barcha mahsulotlar</h2>
+          <p class="text-[11px] sm:text-xs text-slate-500" id="currentSectionSubtitle">Kundalik zaruriyatlar va ommabop gadjetlar</p>
+        </div>
+        <span id="activeFilteredCount" class="text-xs bg-slate-100 text-slate-700 font-bold px-2 py-1 rounded-lg md:hidden">0 ta</span>
+      </div>
+
+      <div class="flex items-center gap-2 w-full md:w-auto justify-end">
+        <label for="sortSelect" class="text-xs text-slate-500 font-medium hidden sm:inline shrink-0">Saralash:</label>
+        <select id="sortSelect" onchange="sortProducts(this.value)" class="w-full sm:w-auto text-xs font-bold bg-slate-50 hover:bg-white border border-slate-200 rounded-xl px-3 py-2 outline-none focus:border-emerald-500 transition">
+          <option value="popular">🔥 Ommabopligi bo'yicha</option>
+          <option value="price-asc">💵 Narxi: Arzondan qimmatga</option>
+          <option value="price-desc">💎 Narxi: Qimmatdan arzonga</option>
+          <option value="rating">⭐ Reytingi yuqori</option>
+        </select>
+      </div>
+
+    </section>
+
+    <!-- ==================== PRODUCT CARDS GRID ==================== -->
+    <section>
+      <!-- Grid: 2 columns on mobile, 3 on tablet, 4 on small laptops, 5 on desktop, 6 on large screens -->
+      <div id="productsGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2.5 sm:gap-3.5">
+        <!-- Generated dynamically via JS -->
+      </div>
+
+      <!-- EMPTY SEARCH / FILTER STATE -->
+      <div id="emptyState" class="hidden text-center py-16 bg-white rounded-3xl border border-slate-200/80 my-4 px-4">
+        <div class="w-16 h-16 bg-slate-100 rounded-2xl flex items-center justify-center mx-auto text-3xl mb-3">🔍</div>
+        <h3 class="text-base sm:text-lg font-bold text-slate-800">Hech narsa topilmadi</h3>
+        <p class="text-xs sm:text-sm text-slate-500 mt-1 max-w-sm mx-auto">Qidiruv so'zini tekshiring yoki filtrlarni tozalang.</p>
+        <button onclick="resetFilters()" class="mt-4 px-5 py-2.5 bg-emerald-600 text-white font-bold rounded-xl text-xs hover:bg-emerald-700 transition tap-effect">
+          Barcha mahsulotlarni ko'rsatish
+        </button>
+      </div>
+    </section>
+
+    <!-- ==================== HYBRID ADVANTAGE BANNER ==================== -->
+    <section class="bg-gradient-to-br from-emerald-950 via-slate-900 to-indigo-950 text-white rounded-3xl p-5 sm:p-8 lg:p-10 shadow-xl overflow-hidden relative">
+      <div class="max-w-2xl relative z-10">
+        <span class="text-amber-400 font-extrabold text-[11px] sm:text-xs uppercase tracking-wider">Gibrid Inqilob</span>
+        <h2 class="text-xl sm:text-3xl font-black mt-1 leading-tight">Nega «Savatcha» eng qulay tizim?</h2>
+        <p class="text-slate-300 text-xs sm:text-sm mt-2 leading-relaxed">
+          Ikkita alohida ilovani ochish va kuryerlarni turli vaqtda poylashga chek qo'ying. 
+          Bitta savatda yangi meva-sabzavotlar va yangi quloqchin xarid qiling!
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mt-6 sm:mt-8 relative z-10">
+        
+        <div class="bg-white/10 backdrop-blur-md p-4 sm:p-5 rounded-2xl border border-white/10 space-y-1.5">
+          <div class="text-2xl">⚡</div>
+          <h4 class="font-extrabold text-sm sm:text-base">Darkstore 20 daqiqa</h4>
+          <p class="text-[11px] sm:text-xs text-slate-300">
+            Har bir mahallada maxsus mini-omborlar. Muzlatilgan va yangi tovarlar erimay yetib boradi.
+          </p>
+        </div>
+
+        <div class="bg-white/10 backdrop-blur-md p-4 sm:p-5 rounded-2xl border border-white/10 space-y-1.5">
+          <div class="text-2xl">📦</div>
+          <h4 class="font-extrabold text-sm sm:text-base">1 450+ PVZ va Kiyib ko'rish</h4>
+          <p class="text-[11px] sm:text-xs text-slate-300">
+            Uyingiz yonidagi shinam tarqatish punktlari. Mahsulotni ko'rib, tekshirib, kiyib olasiz.
+          </p>
+        </div>
+
+        <div class="bg-white/10 backdrop-blur-md p-4 sm:p-5 rounded-2xl border border-white/10 space-y-1.5">
+          <div class="text-2xl">💳</div>
+          <h4 class="font-extrabold text-sm sm:text-base">Yagona Aqlli Savat</h4>
+          <p class="text-[11px] sm:text-xs text-slate-300">
+            Bitta to'lov — qolgan logistikani bizning sun'iy intellektli taqsimlagichimiz o'zi hal qiladi.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==================== MOBILE BOTTOM NAVIGATION BAR ==================== -->
+  <nav class="md:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-lg border-t border-slate-200/90 py-1.5 px-2 flex items-center justify-around shadow-2xl safe-area-pb">
+    
+    <!-- Home Tab -->
+    <button onclick="resetFilters(); window.scrollTo({top:0, behavior:'smooth'})" class="flex flex-col items-center justify-center p-1.5 text-emerald-700 tap-effect">
+      <i data-lucide="home" class="w-5 h-5"></i>
+      <span class="text-[10px] font-bold mt-0.5">Asosiy</span>
+    </button>
+
+    <!-- Catalog Tab -->
+    <button onclick="toggleMobileCatalog()" class="flex flex-col items-center justify-center p-1.5 text-slate-600 hover:text-emerald-700 tap-effect">
+      <i data-lucide="grid" class="w-5 h-5"></i>
+      <span class="text-[10px] font-semibold mt-0.5">Katalog</span>
+    </button>
+
+    <!-- Quick Mode Switcher Tab -->
+    <button onclick="cycleDeliveryMode()" class="flex flex-col items-center justify-center p-1.5 text-slate-600 hover:text-amber-700 tap-effect">
+      <div id="mModeIcon" class="w-5 h-5 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center text-xs font-bold">
+        ⚡
+      </div>
+      <span id="mModeLabel" class="text-[10px] font-semibold mt-0.5">Rejim</span>
+    </button>
+
+    <!-- Favorites Tab -->
+    <button onclick="filterFavorites()" class="relative flex flex-col items-center justify-center p-1.5 text-slate-600 hover:text-rose-600 tap-effect">
+      <i data-lucide="heart" class="w-5 h-5"></i>
+      <span class="text-[10px] font-semibold mt-0.5">Saralangan</span>
+      <span id="mFavBadge" class="hidden absolute top-0.5 right-2 w-3.5 h-3.5 bg-rose-500 text-white rounded-full text-[9px] font-bold flex items-center justify-center">0</span>
+    </button>
+
+    <!-- Cart Tab -->
+    <button onclick="toggleCartDrawer()" class="relative flex flex-col items-center justify-center p-1.5 text-emerald-700 tap-effect">
+      <div class="relative">
+        <i data-lucide="shopping-cart" class="w-5 h-5"></i>
+        <span id="mCartNavBadge" class="hidden absolute -top-1 -right-2 w-4 h-4 bg-emerald-600 text-white rounded-full text-[9px] font-black flex items-center justify-center">0</span>
+      </div>
+      <span class="text-[10px] font-bold mt-0.5">Savat</span>
+    </button>
+
+  </nav>
+
+  <!-- ==================== MOBILE CATALOG DRAWER ==================== -->
+  <div id="mobileCatalogBackdrop" onclick="toggleMobileCatalog()" class="fixed inset-0 bg-slate-950/60 backdrop-blur-xs z-50 transition-opacity hidden opacity-0"></div>
+
+  <div id="mobileCatalogDrawer" class="fixed top-0 bottom-0 left-0 w-[85%] max-w-xs bg-white shadow-2xl z-50 transform -translate-x-full transition-transform duration-300 ease-in-out flex flex-col">
+    
+    <div class="p-4 border-b border-slate-200 flex items-center justify-between bg-slate-50">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center">
+          <i data-lucide="grid" class="w-4 h-4"></i>
+        </div>
+        <span class="font-extrabold text-sm text-slate-900">Bo'limlar katalogi</span>
+      </div>
+      <button onclick="toggleMobileCatalog()" class="p-1.5 text-slate-400 hover:text-slate-700 rounded-lg">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+    </div>
+
+    <div class="flex-1 overflow-y-auto p-3 space-y-1 text-xs font-bold text-slate-700">
+      <button onclick="selectMobileCat('Barchasi')" class="w-full text-left p-3 rounded-xl hover:bg-emerald-50 flex items-center justify-between">
+        <span class="flex items-center gap-2.5"><span>✨</span> Barcha tovarlar</span>
+        <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+      </button>
+      <button onclick="selectMobileCat('Oziq-ovqat')" class="w-full text-left p-3 rounded-xl hover:bg-emerald-50 flex items-center justify-between">
+        <span class="flex items-center gap-2.5"><span>🍎</span> Oziq-ovqat va Meva</span>
+        <span class="text-[9px] bg-amber-100 text-amber-900 px-1.5 py-0.5 rounded font-bold">⚡ 20 daq</span>
+      </button>
+      <button onclick="selectMobileCat('Go\'sht va Sut')" class="w-full text-left p-3 rounded-xl hover:bg-emerald-50 flex items-center justify-between">
+        <span class="flex items-center gap-2.5"><span>🥩</span> Go'sht va Sut mahsulotlari</span>
+        <span class="text-[9px] bg-amber-100 text-amber-900 px-1.5 py-0.5 rounded font-bold">⚡ 20 daq</span>
+      </button>
+      <button onclick="selectMobileCat('Elektronika')" class="w-full text-left p-3 rounded-xl hover:bg-indigo-50 flex items-center justify-between">
+        <span class="flex items-center gap-2.5"><span>📱</span> Elektronika va Smartfonlar</span>
+        <span class="text-[9px] bg-indigo-100 text-indigo-900 px-1.5 py-0.5 rounded font-bold">📦 PVZ</span>
+      </button>
+      <button onclick="selectMobileCat('Maishiy texnika')" class="w-full text-left p-3 rounded-xl hover:bg-indigo-50 flex items-center justify-between">
+        <span class="flex items-center gap-2.5"><span>☕</span> Maishiy texnika</span>
+        <span class="text-[9px] bg-indigo-100 text-indigo-900 px-1.5 py-0.5 rounded font-bold">📦 PVZ</span>
+      </button>
+      <button onclick="selectMobileCat('Kiyim va Poyabzal')" class="w-full text-left p-3 rounded-xl hover:bg-pink-50 flex items-center justify-between">
+        <span class="flex items-center gap-2.5"><span>👟</span> Kiyim va Poyabzallar</span>
+        <span class="text-[9px] bg-pink-100 text-pink-900 px-1.5 py-0.5 rounded font-bold">Sinash</span>
+      </button>
+      <button onclick="selectMobileCat('Uy va Oshxona')" class="w-full text-left p-3 rounded-xl hover:bg-amber-50 flex items-center justify-between">
+        <span class="flex items-center gap-2.5"><span>🍳</span> Uy va Oshxona anjomlari</span>
+        <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+      </button>
+      <button onclick="selectMobileCat('Tozalik va Kimyo')" class="w-full text-left p-3 rounded-xl hover:bg-teal-50 flex items-center justify-between">
+        <span class="flex items-center gap-2.5"><span>🧴</span> Maishiy kimyo va Tozalik</span>
+        <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+      </button>
+      <button onclick="selectMobileCat('Go\'zallik')" class="w-full text-left p-3 rounded-xl hover:bg-purple-50 flex items-center justify-between">
+        <span class="flex items-center gap-2.5"><span>💄</span> Go'zallik va Parvarish</span>
+        <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+      </button>
+      <button onclick="selectMobileCat('Avto va Asboblar')" class="w-full text-left p-3 rounded-xl hover:bg-slate-100 flex items-center justify-between">
+        <span class="flex items-center gap-2.5"><span>🚗</span> Avto jihozlar va Asboblar</span>
+        <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+      </button>
+    </div>
+
+    <div class="p-4 border-t border-slate-200 bg-slate-50 space-y-2">
+      <button onclick="openModal('nasiyaModal'); toggleMobileCatalog();" class="w-full py-2.5 px-3 bg-indigo-50 border border-indigo-200 text-indigo-900 rounded-xl text-xs font-bold flex items-center justify-center gap-2">
+        <i data-lucide="percent" class="w-4 h-4"></i> Savatcha Nasiya (0-0-12)
+      </button>
+      <button onclick="openModal('pvzModal'); toggleMobileCatalog();" class="w-full py-2.5 px-3 bg-slate-200 text-slate-800 rounded-xl text-xs font-bold flex items-center justify-center gap-2">
+        <i data-lucide="map-pin" class="w-4 h-4"></i> 1 450+ Tarqatish punktlari
+      </button>
+    </div>
+
+  </div>
+
+  <!-- ==================== CART SLIDEOUT DRAWER (MOBILE-FIRST) ==================== -->
+  <div id="cartDrawerBackdrop" onclick="toggleCartDrawer()" class="fixed inset-0 bg-slate-950/60 backdrop-blur-xs z-50 transition-opacity hidden opacity-0"></div>
+
+  <div id="cartDrawer" class="fixed top-0 right-0 bottom-0 w-full max-w-md bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col">
+    
+    <!-- Drawer Header -->
+    <div class="p-3.5 sm:p-4 border-b border-slate-200 flex items-center justify-between bg-slate-50">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center font-bold">
+          <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+        </div>
+        <div>
+          <h3 class="font-black text-slate-900 leading-tight text-sm sm:text-base">Savatchangiz</h3>
+          <p class="text-[11px] text-slate-500"><span id="cartTotalItemsCount">0</span> ta mahsulot tanlandi</p>
+        </div>
+      </div>
+      <button onclick="toggleCartDrawer()" class="p-2 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-200 transition tap-effect">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+    </div>
+
+    <!-- Smart Split Delivery Indicator in Cart -->
+    <div class="bg-gradient-to-r from-emerald-50 to-teal-50 px-3.5 py-2 border-b border-emerald-100 flex items-center gap-2 text-[11px] sm:text-xs text-emerald-900">
+      <i data-lucide="sparkles" class="w-4 h-4 text-emerald-600 shrink-0"></i>
+      <span><b>Aqlli bo'linish:</b> Tezkor tovarlar kuryerda, Market tovarlari PVZ da kutadi!</span>
+    </div>
+
+    <!-- Cart Items Scrollable List -->
+    <div id="cartItemsContainer" class="flex-1 overflow-y-auto p-3 sm:p-4 space-y-3">
+      <!-- Injected by JavaScript -->
+    </div>
+
+    <!-- Drawer Footer -->
+    <div class="p-3.5 sm:p-4 border-t border-slate-200 bg-slate-50 space-y-2.5">
+      
+      <div class="space-y-1 text-xs text-slate-600">
+        <div class="flex justify-between">
+          <span>Mahsulotlar narxi:</span>
+          <span id="cartSubtotal" class="font-bold text-slate-900">0 so'm</span>
+        </div>
+        <div class="flex justify-between text-emerald-600 font-medium">
+          <span>Yetkazib berish:</span>
+          <span class="font-bold">Bepul</span>
+        </div>
+        <div class="flex justify-between pt-1.5 border-t border-slate-200 text-sm font-black text-slate-900">
+          <span>Jami to'lov:</span>
+          <span id="cartFinalTotal" class="text-base sm:text-lg text-emerald-700">0 so'm</span>
+        </div>
+        <div id="cartNasiyaEstimation" class="text-[11px] text-indigo-700 font-bold text-right">
+          yoki Savatcha Nasiya bilan <b>0 so'm/oy</b>
+        </div>
+      </div>
+
+      <button onclick="startCheckout()" id="checkoutBtn" disabled class="w-full bg-emerald-600 hover:bg-emerald-700 disabled:bg-slate-300 disabled:cursor-not-allowed text-white font-extrabold py-3 rounded-xl transition flex items-center justify-center gap-2 shadow-md tap-effect text-sm">
+        <span>Buyurtma berish</span>
+        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+      </button>
+
+      <p class="text-[10px] text-center text-slate-400">
+        Payme, Click, Savatcha Nasiya yoki qabulda to'lang
+      </p>
+    </div>
+
+  </div>
+
+  <!-- ==================== CHECKOUT MODAL (RESPONSIVE BOTTOM-SHEET ON MOBILE) ==================== -->
+  <div id="checkoutModal" class="fixed inset-0 bg-slate-950/65 backdrop-blur-xs z-50 hidden flex items-end sm:items-center justify-center p-0 sm:p-4 transition-all">
+    <div class="bg-white rounded-t-3xl sm:rounded-3xl max-w-lg w-full p-5 sm:p-6 shadow-2xl relative max-h-[90vh] overflow-y-auto">
+      
+      <button onclick="closeModal('checkoutModal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 p-1">
+        <i data-lucide="x" class="w-5 h-5 sm:w-6 sm:h-6"></i>
+      </button>
+
+      <div class="text-center mb-5">
+        <div class="w-12 h-12 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-2">
+          <i data-lucide="check-circle-2" class="w-7 h-7"></i>
+        </div>
+        <h3 class="text-lg sm:text-xl font-black text-slate-900">Buyurtmani rasmiylashtirish</h3>
+        <p class="text-[11px] sm:text-xs text-slate-500">Savatcha tezkor va qulay yetkazib berish xizmati</p>
+      </div>
+
+      <form id="orderForm" onsubmit="handleOrderSubmit(event)" class="space-y-3.5 text-xs font-bold">
+        <div>
+          <label class="block text-slate-700 mb-1">Ism va Familiyangiz</label>
+          <input type="text" required placeholder="Masalan: Sardor Aliyev" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 outline-none focus:border-emerald-500 text-xs sm:text-sm font-normal">
+        </div>
+
+        <div>
+          <label class="block text-slate-700 mb-1">Telefon raqamingiz</label>
+          <input type="tel" required placeholder="+998 90 123 45 67" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 outline-none focus:border-emerald-500 text-xs sm:text-sm font-normal">
+        </div>
+
+        <div>
+          <label class="block text-slate-700 mb-1">Yetkazish manzili yoki qulay PVZ punkti</label>
+          <input type="text" required placeholder="Toshkent sh., Yunusobod 4-mavze yoki PVZ #28" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 outline-none focus:border-emerald-500 text-xs sm:text-sm font-normal">
+        </div>
+
+        <div>
+          <label class="block text-slate-700 mb-1">To'lov usuli</label>
+          <div class="grid grid-cols-3 gap-2 text-[11px]">
+            <label class="border-2 border-emerald-500 bg-emerald-50 text-emerald-900 p-2 rounded-xl flex flex-col items-center gap-1 cursor-pointer text-center tap-effect">
+              <input type="radio" name="paymentMethod" value="click_payme" checked class="hidden">
+              <i data-lucide="smartphone" class="w-4 h-4"></i>
+              <span>Click / Payme</span>
+            </label>
+            <label class="border border-slate-200 p-2 rounded-xl flex flex-col items-center gap-1 cursor-pointer text-center hover:bg-slate-50 tap-effect">
+              <input type="radio" name="paymentMethod" value="nasiya" class="hidden">
+              <i data-lucide="percent" class="w-4 h-4 text-indigo-600"></i>
+              <span class="text-indigo-900 font-black">Nasiya (12 oy)</span>
+            </label>
+            <label class="border border-slate-200 p-2 rounded-xl flex flex-col items-center gap-1 cursor-pointer text-center hover:bg-slate-50 tap-effect">
+              <input type="radio" name="paymentMethod" value="cash" class="hidden">
+              <i data-lucide="banknote" class="w-4 h-4"></i>
+              <span>Qabulda naqd</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="p-3 bg-slate-50 rounded-xl space-y-1 text-slate-600">
+          <div class="flex justify-between items-center">
+            <span class="font-normal">Jami summa:</span>
+            <span id="modalCheckoutTotal" class="text-slate-900 font-black text-sm sm:text-base">0 so'm</span>
+          </div>
+        </div>
+
+        <button type="submit" class="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-black rounded-xl text-xs sm:text-sm transition shadow-md tap-effect">
+          Buyurtmani tasdiqlash
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ==================== ORDER SUCCESS CONFIRMATION MODAL ==================== -->
+  <div id="successModal" class="fixed inset-0 bg-slate-950/65 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-sm w-full p-6 text-center shadow-2xl">
+      <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-3">
+        <i data-lucide="check" class="w-8 h-8"></i>
+      </div>
+      <h3 class="text-lg font-black text-slate-900">Buyurtmangiz qabul qilindi!</h3>
+      <p class="text-xs text-slate-500 mt-1.5 leading-relaxed">
+        ⚡ Tezkor mahsulotlar 20 daqiqada kuryer bilan uyingizga boradi. 📦 Bozor mahsulotlari esa ertaga PVZ ga tayyor bo'ladi.
+      </p>
+      <div class="mt-4 p-3 bg-slate-50 rounded-xl text-left text-xs font-mono text-slate-700 space-y-0.5">
+        <div>Buyurtma kodi: <b class="text-emerald-700">#SV-94812</b></div>
+        <div>Holat: <b>Yig'ish boshlandi</b></div>
+      </div>
+      <button onclick="closeModal('successModal')" class="mt-4 w-full py-2.5 bg-emerald-600 text-white font-bold rounded-xl text-xs hover:bg-emerald-700 transition tap-effect">
+        Xaridni davom ettirish
+      </button>
+    </div>
+  </div>
+
+  <!-- ==================== NASIYA MODAL ==================== -->
+  <div id="nasiyaModal" class="fixed inset-0 bg-slate-950/65 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-5 sm:p-6 shadow-2xl relative">
+      <button onclick="closeModal('nasiyaModal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+      <div class="text-center mb-4">
+        <div class="w-12 h-12 bg-indigo-100 text-indigo-700 rounded-2xl flex items-center justify-center mx-auto mb-2 font-black text-xl">
+          %
+        </div>
+        <h3 class="text-base sm:text-lg font-black text-slate-900">Savatcha Nasiya — 0-0-12</h3>
+        <p class="text-[11px] sm:text-xs text-slate-500">Ortiqcha hujjatlarsiz, 1 daqiqada tasdiqlanadigan muddatli to'lov</p>
+      </div>
+      <div class="space-y-2.5 text-xs">
+        <div class="p-3 bg-indigo-50/70 rounded-xl border border-indigo-100 flex items-start gap-2.5">
+          <i data-lucide="check" class="w-4 h-4 text-indigo-600 shrink-0 mt-0.5"></i>
+          <div>
+            <b>Boshlang'ich to'lov: 0 so'm</b>
+            <p class="text-slate-500 text-[11px]">Birinchi to'lovni faqat keyingi oyda qilasiz.</p>
+          </div>
+        </div>
+        <div class="p-3 bg-indigo-50/70 rounded-xl border border-indigo-100 flex items-start gap-2.5">
+          <i data-lucide="clock" class="w-4 h-4 text-indigo-600 shrink-0 mt-0.5"></i>
+          <div>
+            <b>3, 6 yoki 12 oyga bo'lib to'lash</b>
+            <p class="text-slate-500 text-[11px]">Byudjetingizga mos muddatni o'zingiz tanlang.</p>
+          </div>
+        </div>
+        <div class="p-3 bg-indigo-50/70 rounded-xl border border-indigo-100 flex items-start gap-2.5">
+          <i data-lucide="shield" class="w-4 h-4 text-indigo-600 shrink-0 mt-0.5"></i>
+          <div>
+            <b>Faqat pasport/ID karta kerak</b>
+            <p class="text-slate-500 text-[11px]">Kafil yoki ish joyidan ma'lumotnoma talab etilmaydi.</p>
+          </div>
+        </div>
+      </div>
+      <button onclick="closeModal('nasiyaModal')" class="w-full mt-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold rounded-xl text-xs transition tap-effect">
+        Tushunarli, davom etish
+      </button>
+    </div>
+  </div>
+
+  <!-- ==================== PVZ MAP & ADDRESS MODAL ==================== -->
+  <div id="pvzModal" class="fixed inset-0 bg-slate-950/65 backdrop-blur-xs z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-5 sm:p-6 shadow-2xl relative max-h-[85vh] flex flex-col">
+      <button onclick="closeModal('pvzModal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+      <div class="flex items-center gap-2.5 mb-3">
+        <div class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center">
+          <i data-lucide="map-pin" class="w-5 h-5"></i>
+        </div>
+        <div>
+          <h3 class="text-sm sm:text-base font-black text-slate-900">Savatcha Tarqatish Punktlari (PVZ)</h3>
+          <p class="text-[11px] text-slate-500">Respublika bo'ylab 1,450+ bepul topshirish punktlari</p>
+        </div>
+      </div>
+      <div class="space-y-2 overflow-y-auto text-xs pr-1 flex-1">
+        <div class="p-3 border border-slate-200 rounded-xl flex items-center justify-between hover:bg-slate-50">
+          <div>
+            <div class="font-bold text-slate-800">Toshkent, Chilonzor 9-mavze, 12</div>
+            <div class="text-[11px] text-slate-500">Mirzo Ulug'bek metrosi yaqinida • 09:00 - 21:00</div>
+          </div>
+          <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded">Ochiq</span>
+        </div>
+        <div class="p-3 border border-slate-200 rounded-xl flex items-center justify-between hover:bg-slate-50">
+          <div>
+            <div class="font-bold text-slate-800">Toshkent, Yunusobod 4-mavze, 7</div>
+            <div class="text-[11px] text-slate-500">Mega Planet majmuasi orqasida • 09:00 - 21:00</div>
+          </div>
+          <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded">Ochiq</span>
+        </div>
+        <div class="p-3 border border-slate-200 rounded-xl flex items-center justify-between hover:bg-slate-50">
+          <div>
+            <div class="font-bold text-slate-800">Samarqand, Registon ko'chasi 15</div>
+            <div class="text-[11px] text-slate-500">Universitet xiyoboni ro'parasida • 09:00 - 21:00</div>
+          </div>
+          <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded">Ochiq</span>
+        </div>
+        <div class="p-3 border border-slate-200 rounded-xl flex items-center justify-between hover:bg-slate-50">
+          <div>
+            <div class="font-bold text-slate-800">Farg'ona, Al-Farg'oniy shoh ko'chasi 88</div>
+            <div class="text-[11px] text-slate-500">Markaziy istirohat bog'i yonida • 09:00 - 21:00</div>
+          </div>
+          <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded">Ochiq</span>
+        </div>
+        <div class="p-3 border border-slate-200 rounded-xl flex items-center justify-between hover:bg-slate-50">
+          <div>
+            <div class="font-bold text-slate-800">Andijon, Bobur shoh ko'chasi 24</div>
+            <div class="text-[11px] text-slate-500">Markaziy dehqon bozori yonida • 09:00 - 21:00</div>
+          </div>
+          <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded">Ochiq</span>
+        </div>
+        <div class="p-3 border border-slate-200 rounded-xl flex items-center justify-between hover:bg-slate-50">
+          <div>
+            <div class="font-bold text-slate-800">Buxoro, Naqshbandiy ko'chasi 51</div>
+            <div class="text-[11px] text-slate-500">Labihovuz majmuasi yaqinida • 09:00 - 21:00</div>
+          </div>
+          <span class="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.5 rounded">Ochiq</span>
+        </div>
+      </div>
+      <button onclick="closeModal('pvzModal')" class="w-full mt-3 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-xs transition tap-effect">
+        Yopish
+      </button>
+    </div>
+  </div>
+
+  <!-- ==================== TOAST NOTIFICATION CONTAINER ==================== -->
+  <div id="toastContainer" class="fixed bottom-16 md:bottom-6 right-4 z-50 pointer-events-none flex flex-col gap-2"></div>
+
+  <!-- ==================== FOOTER ==================== -->
+  <footer class="bg-white border-t border-slate-200/90 mt-12 pt-8 sm:pt-12 pb-8 text-xs text-slate-500">
+    <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+      
+      <div class="space-y-2.5">
+        <div class="flex items-center gap-2">
+          <div class="w-8 h-8 rounded-xl bg-emerald-600 flex items-center justify-center text-white font-bold">
+            <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+          </div>
+          <span class="text-xl font-black text-slate-900">savatcha</span>
+        </div>
+        <p class="text-slate-500 text-[11px] leading-relaxed">
+          O'zbekistondagi ilk va eng yirik gibrid savdo tizimi. Oziq-ovqat va barcha turdagi tovarlar bitta ekotizimda.
+        </p>
+        <div class="text-[10px] text-slate-400">
+          &copy; 2026 Savatcha Technologies MCHJ. Barcha huquqlar himoyalangan.
+        </div>
+      </div>
+
+      <div>
+        <h5 class="font-extrabold text-slate-900 mb-2.5 text-xs sm:text-sm">⚡ Savatcha Tezkor (Korzinka)</h5>
+        <ul class="space-y-1.5 text-[11px]">
+          <li><a href="#" class="hover:text-emerald-600">Yangi sabzavot va mevalar</a></li>
+          <li><a href="#" class="hover:text-emerald-600">Go'sht va sut mahsulotlari</a></li>
+          <li><a href="#" class="hover:text-emerald-600">Non va issiq pishiriqlar</a></li>
+          <li><a href="#" class="hover:text-emerald-600">20 daqiqada kuryer yetkazishi</a></li>
+          <li><a href="#" class="hover:text-emerald-600">100% yangilik kafolati</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h5 class="font-extrabold text-slate-900 mb-2.5 text-xs sm:text-sm">📦 Savatcha Market (Uzum)</h5>
+        <ul class="space-y-1.5 text-[11px]">
+          <li><a href="#" class="hover:text-indigo-600">Elektronika va smartfonlar</a></li>
+          <li><a href="#" class="hover:text-indigo-600">Kiyim-kechak va poyabzal</a></li>
+          <li><a href="#" class="hover:text-indigo-600">Savatcha Nasiya (0-0-12)</a></li>
+          <li><a href="#" class="hover:text-indigo-600">Ertaga 1,450+ PVZ punktlariga</a></li>
+          <li><a href="#" class="hover:text-indigo-600">Kiyib ko'rish va qaytarish</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h5 class="font-extrabold text-slate-900 mb-2.5 text-xs sm:text-sm">Aloqa & Qo'llab-quvvatlash</h5>
+        <ul class="space-y-1.5 text-[11px]">
+          <li class="font-extrabold text-slate-900 text-sm flex items-center gap-1.5">
+            <i data-lucide="phone-call" class="w-4 h-4 text-emerald-600"></i> +998 71 200 00 20
+          </li>
+          <li>Telegram: <a href="#" class="text-emerald-600 font-bold hover:underline">@savatcha_rasmiy</a></li>
+          <li>Ish vaqti: 24/7 har kuni</li>
+          <li class="pt-2">
+            <span class="inline-block bg-emerald-50 text-emerald-800 border border-emerald-200 px-2.5 py-1 rounded-lg font-bold text-[10px]">
+              Toshkent, O'zbekiston
+            </span>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ==================== JAVASCRIPT APPLICATION LOGIC ==================== -->
+  <script>
+    // EXPANDED PRODUCT CATALOG (32 HIGH-QUALITY HYBRID PRODUCTS)
+    const PRODUCTS = [
+      // ---------- ⚡ SAVATCHA TEZKOR / KORZINKA SUPERMARKET (16 PRODUCTS) ----------
+      {
+        id: 1,
+        title: "Toshkent issiq patir noni",
+        category: "Oziq-ovqat",
+        type: "express",
+        price: 5000,
+        oldPrice: 6500,
+        badge: "⚡ 20 daqiqa",
+        badgeColor: "bg-amber-100 text-amber-900",
+        rating: 4.9,
+        reviews: 420,
+        image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=450&auto=format&fit=crop&q=80",
+        unit: "dona",
+        nasiya: false
+      },
+      {
+        id: 2,
+        title: "Mol go'shti (Lahm saralangan, 1 kg)",
+        category: "Go'sht va Sut",
+        type: "express",
+        price: 95000,
+        oldPrice: 110000,
+        badge: "⚡ 20 daqiqa",
+        badgeColor: "bg-amber-100 text-amber-900",
+        rating: 4.8,
+        reviews: 215,
+        image: "https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=450&auto=format&fit=crop&q=80",
+        unit: "kg",
+        nasiya: false
+      },
+      {
+        id: 3,
+        title: "Nestle Sut 3.2% pasterizatsiyalangan (1 L)",
+        category: "Go'sht va Sut",
+        type: "express",
+        price: 13500,
+        oldPrice: 15000,
+        badge: "⚡ 20 daqiqa",
+        badgeColor: "bg-amber-100 text-amber-900",
+        rating: 4.9,
+        reviews: 580,
+        image: "https://images.unsplash.com/photo-1563636619-e9143da7973b?w=450&auto=format&fit=crop&q=80",
+        unit: "dona",
+        nasiya: false
+      },
+      {
+        id: 4,
+        title: "Qizil olma 'Golden Delicious' (1 kg)",
+        category: "Oziq-ovqat",
+        type: "express",
+        price: 18000,
+        oldPrice: 22000,
+        badge: "⚡ 20 daqiqa",
+        badgeColor: "bg-amber-100 text-amber-900",
+        rating: 4.7,
+        reviews: 132,
+        image: "https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=450&auto=format&fit=crop&q=80",
+        unit: "kg",
+        nasiya: false
+      },
+      {
+        id: 5,
+        title: "Ekvador shirin bananlari (1 kg)",
+        category: "Oziq-ovqat",
+        type: "express",
+        price: 21000,
+        oldPrice: 26000,
+        badge: "⚡ 20 daqiqa",
+        badgeColor: "bg-amber-100 text-amber-900",
+        rating: 4.8,
+        reviews: 310,
+        image: "https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=450&auto=format&fit=crop&q=80",
+        unit: "kg",
+        nasiya: false
+      },
+      {
+        id: 6,
+        title: "Yusupov qizil pomidorlari (1 kg)",
+        category: "Oziq-ovqat",
+        type: "express",
+        price: 16000,
+        oldPrice: 20000,
+        badge: "⚡ 20 daqiqa",
+        badgeColor: "bg-amber-100 text-amber-900",
+        rating: 4.9,
+        reviews: 180,
+        image: "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?w=450&auto=format&fit=crop&q=80",
+        unit: "kg",
+        nasiya: false
+      },
+      {
+        id: 7,
+        title: "Toshkentcha milliy Ot qazisi (500 g)",
+        category: "Go'sht va Sut",
+        type: "express",
+        price: 78000,
+        oldPrice: 89000,
+        badge: "⚡ 20 daqiqa",
+        badgeColor: "bg-amber-100 text-amber-900",
+        rating: 5.0,
+        reviews: 412,
+        image: "https://images.unsplash.com/photo-1544025162-d76694265947?w=450&auto=format&fit=crop&q=80",
+        unit: "dona",
+        nasiya: false
+      },
+      {
+        id: 8,
+        title: "Musaffo tabiy qaymoq 20% (200 g)",
+        category: "Go'sht va Sut",
+        type: "express",
+        price: 11000,
+        oldPrice: 12500,
+        badge: "⚡ 20 daqiqa",
+        badgeColor: "bg-amber-100 text-amber-900",
+        rating: 4.8,
+        reviews: 95,
+        image: "https://images.unsplash.com/photo-1528750997573-59b89d56f4f7?w=450&auto=format&fit=crop&q=80",
+        unit: "dona",
+        nasiya: false
+      },
+      {
+        id: 9,
+        title: "Coca-Cola Classic gazli ichimlik (1.5 L)",
+        category: "Oziq-ovqat",
+        type: "express",
+        price: 13000,
+        oldPrice: 14500,
+        badge: "⚡ 20 daqiqa",
+        badgeColor: "bg-amber-100 text-amber-900",
+        rating: 4.9,
+        reviews: 890,
+        image: "https://images.unsplash.com/photo-1622483767028-3f66f32aef97?w=450&auto=format&fit=crop&q=80",
+        unit: "dona",
+        nasiya: false
+      },
+      {
+        id: 10,
+        title: "Fransuzcha shokoladli issiq Kruassan (2 dona)",
+        category: "Oziq-ovqat",
+        type: "express",
+        price: 19000,
+        oldPrice: 24000,
+        badge: "⚡ 20 daqiqa",
+        badgeColor: "bg-amber-100 text-amber-900",
+        rating: 4.9,
+        reviews: 145,
+        image: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?w=450&auto=format&fit=crop&q=80",
+        unit: "qadoq",
+        nasiya: false
+      },
+      {
+        id: 11,
+        title: "Ariel Kir yuvish geli 'Color' (2.6 L)",
+        category: "Tozalik va Kimyo",
+        type: "express",
+        price: 119000,
+        oldPrice: 145000,
+        badge: "⚡ 20 daqiqa",
+        badgeColor: "bg-amber-100 text-amber-900",
+        rating: 4.9,
+        reviews: 310,
+        image: "https://images.unsplash.com/photo-1583947215259-38e31be8751f?w=450&auto=format&fit=crop&q=80",
+        unit: "dona",
+        nasiya: true,
+        nasiyaPrice: 13800
+      },
+      {
+        id: 12,
+        title: "Fairy Limon idish yuvish vositasi (900 ml)",
+        category: "Tozalik va Kimyo",
+        type: "express",
+        price: 24000,
+        oldPrice: 28000,
+        badge: "⚡ 20 daqiqa",
+        badgeColor: "bg-amber-100 text-amber-900",
+        rating: 4.8,
+        reviews: 520,
+        image: "https://images.unsplash.com/photo-1585837575652-267c041d77d4?w=450&auto=format&fit=crop&q=80",
+        unit: "dona",
+        nasiya: false
+      },
+      {
+        id: 13,
+        title: "Papia 3 qavatli tualet qog'ozi (8 dona)",
+        category: "Tozalik va Kimyo",
+        type: "express",
+        price: 36000,
+        oldPrice: 42000,
+        badge: "⚡ 20 daqiqa",
+        badgeColor: "bg-amber-100 text-amber-900",
+        rating: 4.7,
+        reviews: 198,
+        image: "https://images.unsplash.com/photo-1584556812952-905ffd0c611a?w=450&auto=format&fit=crop&q=80",
+        unit: "qadoq",
+        nasiya: false
+      },
+      {
+        id: 14,
+        title: "Head & Shoulders Mentol Shampun (400 ml)",
+        category: "Go'zallik",
+        type: "express",
+        price: 39000,
+        oldPrice: 47000,
+        badge: "⚡ 20 daqiqa",
+        badgeColor: "bg-amber-100 text-amber-900",
+        rating: 4.8,
+        reviews: 260,
+        image: "https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?w=450&auto=format&fit=crop&q=80",
+        unit: "dona",
+        nasiya: false
+      },
+      {
+        id: 15,
+        title: "Lipton Yellow Label qora choy (100 paket)",
+        category: "Oziq-ovqat",
+        type: "express",
+        price: 29000,
+        oldPrice: 35000,
+        badge: "⚡ 20 daqiqa",
+        badgeColor: "bg-amber-100 text-amber-900",
+        rating: 4.8,
+        reviews: 330,
+        image: "https://images.unsplash.com/photo-1576092768241-dec231879fc3?w=450&auto=format&fit=crop&q=80",
+        unit: "quti",
+        nasiya: false
+      },
+      {
+        id: 16,
+        title: "Barra ko'katlar to'plami (kashnich, ukrop, rayhon)",
+        category: "Oziq-ovqat",
+        type: "express",
+        price: 4500,
+        oldPrice: 6000,
+        badge: "⚡ 20 daqiqa",
+        badgeColor: "bg-amber-100 text-amber-900",
+        rating: 4.9,
+        reviews: 175,
+        image: "https://images.unsplash.com/photo-1540420773420-3366772f4999?w=450&auto=format&fit=crop&q=80",
+        unit: "bog'",
+        nasiya: false
+      },
+
+      // ---------- 📦 SAVATCHA MARKET / UZUM MARKETPLACE (16 PRODUCTS) ----------
+      {
+        id: 17,
+        title: "Apple iPhone 16 Pro Max 256GB Natural Titanium",
+        category: "Elektronika",
+        type: "market",
+        price: 16500000,
+        oldPrice: 17800000,
+        badge: "📦 Ertaga PVZ",
+        badgeColor: "bg-indigo-100 text-indigo-900",
+        rating: 5.0,
+        reviews: 84,
+        image: "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=450&auto=format&fit=crop&q=80",
+        unit: "dona",
+        nasiya: true,
+        nasiyaPrice: 1720000
+      },
+      {
+        id: 18,
+        title: "Samsung Galaxy S24 Ultra 12/512GB Titanium Gray",
+        category: "Elektronika",
+        type: "market",
+        price: 14200000,
+        oldPrice: 15600000,
+        badge: "📦 Ertaga PVZ",
+        badgeColor: "bg-indigo-100 text-indigo-900",
+        rating: 4.9,
+        reviews: 112,
+        image: "https://images.unsplash.com/photo-1610945415295-d9bbf067e59c?w=450&auto=format&fit=crop&q=80",
+        unit: "dona",
+        nasiya: true,
+        nasiyaPrice: 1480000
+      },
+      {
+        id: 19,
+        title: "Apple AirPods Pro 2 MagSafe (USB-C)",
+        category: "Elektronika",
+        type: "market",
+        price: 2890000,
+        oldPrice: 3200000,
+        badge: "📦 Ertaga PVZ",
+        badgeColor: "bg-indigo-100 text-indigo-900",
+        rating: 4.9,
+        reviews: 245,
+        image: "https://images.unsplash.com/photo-1600294037681-c80b4cb5b434?w=450&auto=format&fit=crop&q=80",
+        unit: "dona",
+        nasiya: true,
+        nasiyaPrice: 305000
+      },
+      {
+        id: 20,
+        title: "Xiaomi Smart TV 55\" 4K UHD A Pro 2025",
+        category: "Elektronika",
+        type: "market",
+        price: 4600000,
+        oldPrice: 5200000,
+        badge: "📦 Ertaga PVZ",
+        badgeColor: "bg-indigo-100 text-indigo-900",
+        rating: 4.8,
+        reviews: 88,
+        image: "https://images.unsplash.com/photo-1593784991095-a205069470b6?w=450&auto=format&fit=crop&q=80",
+        unit: "dona",
+        nasiya: true,
+        nasiyaPrice: 485000
+      },
+      {
+        id: 21,
+        title: "Lenovo IdeaPad 3 Core i5 12th Gen / 16GB / 512GB SSD",
+        category: "Elektronika",
+        type: "market",
+        price: 6400000,
+        oldPrice: 7100000,
+        badge: "📦 Ertaga PVZ",
+        badgeColor: "bg-indigo-100 text-indigo-900",
+        rating: 4.7,
+        reviews: 64,
+        image: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=450&auto=format&fit=crop&q=80",
+        unit: "dona",
+        nasiya: true,
+        nasiyaPrice: 670000
+      },
+      {
+        id: 22,
+        title: "Xiaomi Smart Air Fryer 6L Aerogril",
+        category: "Maishiy texnika",
+        type: "market",
+        price: 890000,
+        oldPrice: 1100000,
+        badge: "📦 Ertaga PVZ",
+        badgeColor: "bg-indigo-100 text-indigo-900",
+        rating: 4.8,
+        reviews: 320,
+        image: "https://images.unsplash.com/photo-1585515320310-259814833e62?w=450&auto=format&fit=crop&q=80",
+        unit: "dona",
+        nasiya: true,
+        nasiyaPrice: 99000
+      },
+      {
+        id: 23,
+        title: "Philips Series 2200 Avtomat Kofemashina",
+        category: "Maishiy texnika",
+        type: "market",
+        price: 4900000,
+        oldPrice: 5600000,
+        badge: "📦 Ertaga PVZ",
+        badgeColor: "bg-indigo-100 text-indigo-900",
+        rating: 4.9,
+        reviews: 53,
+        image: "https://images.unsplash.com/photo-1517668808822-9ebb02f2a0e6?w=450&auto=format&fit=crop&q=80",
+        unit: "dona",
+        nasiya: true,
+        nasiyaPrice: 515000
+      },
+      {
+        id: 24,
+        title: "Dyson V12 Detect Slim Simsiz Changyutgich",
+        category: "Maishiy texnika",
+        type: "market",
+        price: 7800000,
+        oldPrice: 8900000,
+        badge: "📦 Ertaga PVZ",
+        badgeColor: "bg-indigo-100 text-indigo-900",
+        rating: 5.0,
+        reviews: 41,
+        image: "https://images.unsplash.com/photo-1558317374-067fb5f30001?w=450&auto=format&fit=crop&q=80",
+        unit: "dona",
+        nasiya: true,
+        nasiyaPrice: 820000
+      },
+      {
+        id: 25,
+        title: "Tefal Express Steam Bug'li Dazmol (2400W)",
+        category: "Maishiy texnika",
+        type: "market",
+        price: 490000,
+        oldPrice: 620000,
+        badge: "📦 Ertaga PVZ",
+        badgeColor: "bg-indigo-100 text-indigo-900",
+        rating: 4.8,
+        reviews: 139,
+        image: "https://images.unsplash.com/photo-1544816155-12df9643f363?w=450&auto=format&fit=crop&q=80",
+        unit: "dona",
+        nasiya: true,
+        nasiyaPrice: 54000
+      },
+      {
+        id: 26,
+        title: "Nike Air Force 1 '07 Oq erkaklar krossovkasi",
+        category: "Kiyim va Poyabzal",
+        type: "market",
+        price: 1190000,
+        oldPrice: 1450000,
+        badge: "📦 Kiyib ko'rish PVZ",
+        badgeColor: "bg-pink-100 text-pink-900",
+        rating: 4.9,
+        reviews: 280,
+        image: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=450&auto=format&fit=crop&q=80",
+        unit: "juft",
+        nasiya: true,
+        nasiyaPrice: 129000
+      },
+      {
+        id: 27,
+        title: "Erkaklar zamonaviy Hoodie 'Oversize' (100% Paxta)",
+        category: "Kiyim va Poyabzal",
+        type: "market",
+        price: 199000,
+        oldPrice: 280000,
+        badge: "📦 Kiyib ko'rish PVZ",
+        badgeColor: "bg-pink-100 text-pink-900",
+        rating: 4.7,
+        reviews: 145,
+        image: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=450&auto=format&fit=crop&q=80",
+        unit: "dona",
+        nasiya: true,
+        nasiyaPrice: 22000
+      },
+      {
+        id: 28,
+        title: "Ayollar nafis ipak ko'ylagi 'Spring Elegance'",
+        category: "Kiyim va Poyabzal",
+        type: "market",
+        price: 340000,
+        oldPrice: 420000,
+        badge: "📦 Kiyib ko'rish PVZ",
+        badgeColor: "bg-pink-100 text-pink-900",
+        rating: 4.8,
+        reviews: 92,
+        image: "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=450&auto=format&fit=crop&q=80",
+        unit: "dona",
+        nasiya: true,
+        nasiyaPrice: 38000
+      },
+      {
+        id: 29,
+        title: "Tefal Induction Tova 28cm (Yapishmaydigan)",
+        category: "Uy va Oshxona",
+        type: "market",
+        price: 320000,
+        oldPrice: 390000,
+        badge: "📦 Ertaga PVZ",
+        badgeColor: "bg-indigo-100 text-indigo-900",
+        rating: 4.9,
+        reviews: 98,
+        image: "https://images.unsplash.com/photo-1584990347449-a681d4511d5f?w=450&auto=format&fit=crop&q=80",
+        unit: "dona",
+        nasiya: true,
+        nasiyaPrice: 35000
+      },
+      {
+        id: 30,
+        title: "Luminarc 18 qismli nafis idishlar to'plami",
+        category: "Uy va Oshxona",
+        type: "market",
+        price: 450000,
+        oldPrice: 580000,
+        badge: "📦 Ertaga PVZ",
+        badgeColor: "bg-indigo-100 text-indigo-900",
+        rating: 4.9,
+        reviews: 73,
+        image: "https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=450&auto=format&fit=crop&q=80",
+        unit: "to'plam",
+        nasiya: true,
+        nasiyaPrice: 49000
+      },
+      {
+        id: 31,
+        title: "Dior Sauvage Erkaklar parfyumi (100 ml)",
+        category: "Go'zallik",
+        type: "market",
+        price: 1450000,
+        oldPrice: 1750000,
+        badge: "📦 Ertaga PVZ",
+        badgeColor: "bg-indigo-100 text-indigo-900",
+        rating: 5.0,
+        reviews: 167,
+        image: "https://images.unsplash.com/photo-1523293182086-7651a899d37f?w=450&auto=format&fit=crop&q=80",
+        unit: "dona",
+        nasiya: true,
+        nasiyaPrice: 155000
+      },
+      {
+        id: 32,
+        title: "70mai Dash Cam A800S 4K Avtomobil Registratori",
+        category: "Avto va Asboblar",
+        type: "market",
+        price: 1250000,
+        oldPrice: 1490000,
+        badge: "📦 Ertaga PVZ",
+        badgeColor: "bg-indigo-100 text-indigo-900",
+        rating: 4.9,
+        reviews: 204,
+        image: "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=450&auto=format&fit=crop&q=80",
+        unit: "dona",
+        nasiya: true,
+        nasiyaPrice: 135000
+      }
+    ];
+
+    // STATE
+    let cart = {}; // id -> count
+    let favorites = new Set();
+    let currentFilterType = 'all'; // 'all', 'express', 'market'
+    let currentCategory = 'Barchasi';
+    let searchQuery = '';
+    let currentSort = 'popular';
+
+    // HELPER: Currency format
+    function formatSum(num) {
+      return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " so'm";
+    }
+
+    // INIT
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      updateBadgeCounts();
+      renderProducts();
+    });
+
+    // UPDATE COUNTS (Desktop & Mobile)
+    function updateBadgeCounts() {
+      const allCount = PRODUCTS.length;
+      const expressCount = PRODUCTS.filter(p => p.type === 'express').length;
+      const marketCount = PRODUCTS.filter(p => p.type === 'market').length;
+
+      const mAll = document.getElementById('m-count-all');
+      const mExp = document.getElementById('m-count-express');
+      const mMar = document.getElementById('m-count-market');
+
+      if (mAll) mAll.innerText = allCount;
+      if (mExp) mExp.innerText = expressCount;
+      if (mMar) mMar.innerText = marketCount;
+    }
+
+    // DELIVERY FILTER TOGGLE
+    function setDeliveryFilter(type) {
+      currentFilterType = type;
+      currentCategory = 'Barchasi';
+      searchQuery = '';
+      const input = document.getElementById('searchInput');
+      if (input) input.value = '';
+
+      updateFilterUI();
+      renderProducts();
+    }
+
+    // Cycle through modes for the mobile bottom nav button
+    function cycleDeliveryMode() {
+      if (currentFilterType === 'all') {
+        setDeliveryFilter('express');
+        showToast("⚡ Savatcha Tezkor (20 daqiqa) rejimiga o'tildi");
+      } else if (currentFilterType === 'express') {
+        setDeliveryFilter('market');
+        showToast("📦 Savatcha Market (1 kun PVZ) rejimiga o'tildi");
+      } else {
+        setDeliveryFilter('all');
+        showToast("✨ Barcha tovarlar rejimiga o'tildi");
+      }
+    }
+
+    function updateFilterUI() {
+      const type = currentFilterType;
+      
+      // Desktop tabs
+      ['all', 'express', 'market'].forEach(t => {
+        const tab = document.getElementById(`tab-${t}`);
+        if (tab) {
+          if (t === type) {
+            tab.className = "px-3 py-1.5 rounded-lg transition bg-white text-emerald-800 shadow-xs font-bold tap-effect";
+          } else {
+            tab.className = "px-3 py-1.5 rounded-lg transition text-slate-600 hover:text-emerald-700 tap-effect";
+          }
+        }
+      });
+
+      // Mobile top tabs
+      ['all', 'express', 'market'].forEach(t => {
+        const mTab = document.getElementById(`m-tab-${t}`);
+        if (mTab) {
+          if (t === type) {
+            mTab.className = "flex-1 py-1.5 rounded-lg bg-emerald-600 text-white text-center font-bold transition tap-effect";
+          } else {
+            mTab.className = "flex-1 py-1.5 rounded-lg bg-slate-100 text-slate-700 hover:bg-slate-200 text-center transition tap-effect";
+          }
+        }
+      });
+
+      // Mobile Bottom Nav Icon Indicator
+      const mIcon = document.getElementById('mModeIcon');
+      const mLabel = document.getElementById('mModeLabel');
+      if (mIcon && mLabel) {
+        if (type === 'express') {
+          mIcon.innerHTML = '⚡';
+          mIcon.className = 'w-5 h-5 rounded-full bg-amber-200 text-amber-950 flex items-center justify-center text-xs font-black';
+          mLabel.innerText = 'Tezkor';
+          mLabel.className = 'text-[10px] font-extrabold text-amber-700 mt-0.5';
+        } else if (type === 'market') {
+          mIcon.innerHTML = '📦';
+          mIcon.className = 'w-5 h-5 rounded-full bg-indigo-200 text-indigo-950 flex items-center justify-center text-xs font-black';
+          mLabel.innerText = 'Market';
+          mLabel.className = 'text-[10px] font-extrabold text-indigo-700 mt-0.5';
+        } else {
+          mIcon.innerHTML = '✨';
+          mIcon.className = 'w-5 h-5 rounded-full bg-emerald-100 text-emerald-800 flex items-center justify-center text-xs font-black';
+          mLabel.innerText = 'Rejim';
+          mLabel.className = 'text-[10px] font-semibold text-slate-600 mt-0.5';
+        }
+      }
+
+      // Title & Subtitle
+      const titleEl = document.getElementById('currentSectionTitle');
+      const subEl = document.getElementById('currentSectionSubtitle');
+      if (type === 'express') {
+        titleEl.innerHTML = `<span class="text-amber-500">⚡</span> Savatcha Tezkor (Korzinka formati)`;
+        subEl.innerText = "20 daqiqada eshigingiz oldida — yangi non, go'sht, mevalar";
+      } else if (type === 'market') {
+        titleEl.innerHTML = `<span class="text-indigo-600">📦</span> Savatcha Market (Uzum formati)`;
+        subEl.innerText = "Ertaga yetkazish yoki 1,450+ PVZ larda bepul kutib olish";
+      } else {
+        titleEl.innerText = "Barcha mahsulotlar";
+        subEl.innerText = "Tezkor supermarket va yirik marketplace birgalikda";
+      }
+
+      // Update Category pills active status
+      updateCategoryPillsUI();
+    }
+
+    // CATEGORY FILTER
+    function filterByCategory(cat) {
+      currentCategory = cat;
+      const titleEl = document.getElementById('currentSectionTitle');
+      const subEl = document.getElementById('currentSectionSubtitle');
+      
+      if (cat === 'Barchasi') {
+        titleEl.innerText = "Barcha mahsulotlar";
+        subEl.innerText = "Tezkor supermarket va yirik bozor tovarlari";
+      } else {
+        titleEl.innerText = `${cat} toifasi`;
+        subEl.innerText = `Ushbu toifaga tegishli mahsulotlar ro'yxati`;
+      }
+
+      updateCategoryPillsUI();
+      renderProducts();
+    }
+
+    function updateCategoryPillsUI() {
+      const pills = document.querySelectorAll('.cat-pill');
+      pills.forEach(pill => {
+        const cat = pill.getAttribute('data-cat');
+        if (cat === currentCategory) {
+          pill.className = "cat-pill shrink-0 px-3.5 py-2 rounded-xl bg-emerald-600 text-white text-xs font-bold transition shadow-xs flex items-center gap-1.5 tap-effect";
+        } else {
+          pill.className = "cat-pill shrink-0 px-3.5 py-2 rounded-xl bg-white hover:bg-slate-100 border border-slate-200/90 text-slate-700 text-xs font-bold transition shadow-2xs flex items-center gap-1.5 tap-effect";
+        }
+      });
+    }
+
+    // SEARCH
+    function handleSearch(val) {
+      searchQuery = val.toLowerCase().trim();
+      const clearBtn = document.getElementById('clearSearchBtn');
+      if (clearBtn) {
+        if (searchQuery.length > 0) {
+          clearBtn.classList.remove('hidden');
+        } else {
+          clearBtn.classList.add('hidden');
+        }
+      }
+      renderProducts();
+    }
+
+    function clearSearch() {
+      const input = document.getElementById('searchInput');
+      if (input) input.value = '';
+      handleSearch('');
+    }
+
+    function executeSearch() {
+      const input = document.getElementById('searchInput');
+      if (input) handleSearch(input.value);
+    }
+
+    function resetFilters() {
+      currentFilterType = 'all';
+      currentCategory = 'Barchasi';
+      searchQuery = '';
+      const input = document.getElementById('searchInput');
+      if (input) input.value = '';
+      updateFilterUI();
+      renderProducts();
+    }
+
+    function sortProducts(criteria) {
+      currentSort = criteria;
+      renderProducts();
+    }
+
+    // MAIN PRODUCT RENDERING (RESPONSIVE GRID)
+    function renderProducts() {
+      const grid = document.getElementById('productsGrid');
+      const emptyState = document.getElementById('emptyState');
+      const countEl = document.getElementById('activeFilteredCount');
+
+      let filtered = PRODUCTS.filter(p => {
+        if (currentFilterType !== 'all' && p.type !== currentFilterType) return false;
+        if (currentCategory !== 'Barchasi' && p.category !== currentCategory) return false;
+        if (searchQuery) {
+          const matchTitle = p.title.toLowerCase().includes(searchQuery);
+          const matchCat = p.category.toLowerCase().includes(searchQuery);
+          if (!matchTitle && !matchCat) return false;
+        }
+        return true;
+      });
+
+      // Sorting
+      if (currentSort === 'price-asc') {
+        filtered.sort((a, b) => a.price - b.price);
+      } else if (currentSort === 'price-desc') {
+        filtered.sort((a, b) => b.price - a.price);
+      } else if (currentSort === 'rating') {
+        filtered.sort((a, b) => b.rating - a.rating);
+      }
+
+      if (countEl) countEl.innerText = `${filtered.length} ta`;
+
+      if (filtered.length === 0) {
+        grid.innerHTML = '';
+        emptyState.classList.remove('hidden');
+        return;
+      }
+
+      emptyState.classList.add('hidden');
+
+      grid.innerHTML = filtered.map(p => {
+        const inCartCount = cart[p.id] || 0;
+        const isFav = favorites.has(p.id);
+
+        return `
+          <div class="bg-white rounded-2xl border border-slate-200/80 hover:border-emerald-400 hover:shadow-lg transition-all duration-200 flex flex-col justify-between overflow-hidden group">
+            
+            <!-- IMAGE CONTAINER -->
+            <div class="relative pt-[90%] bg-slate-100 overflow-hidden">
+              <img 
+                src="${p.image}" 
+                alt="${p.title}" 
+                class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                loading="lazy"
+              />
+              
+              <!-- Badges -->
+              <div class="absolute top-1.5 left-1.5 flex flex-col gap-1 items-start">
+                <span class="text-[9px] sm:text-[10px] font-black px-1.5 sm:px-2 py-0.5 rounded-md shadow-2xs ${p.badgeColor}">
+                  ${p.badge}
+                </span>
+                ${p.oldPrice ? `<span class="text-[8px] sm:text-[9px] font-extrabold bg-rose-500 text-white px-1 sm:px-1.5 py-0.5 rounded shadow-2xs">-${Math.round((1 - p.price/p.oldPrice)*100)}%</span>` : ''}
+              </div>
+
+              <!-- Favorite Button -->
+              <button onclick="toggleFavorite(${p.id})" class="absolute top-1.5 right-1.5 w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-white/90 backdrop-blur-xs flex items-center justify-center text-slate-400 hover:text-rose-500 transition shadow-2xs tap-effect" aria-label="Yoqtirish">
+                <i data-lucide="heart" class="w-3.5 h-3.5 sm:w-4 sm:h-4 ${isFav ? 'text-rose-500 fill-rose-500' : ''}"></i>
+              </button>
+            </div>
+
+            <!-- CARD DETAILS -->
+            <div class="p-2.5 sm:p-3 flex flex-col flex-1 justify-between gap-1.5 sm:gap-2">
+              
+              <div>
+                <!-- Category & Rating -->
+                <div class="flex items-center justify-between text-[10px] text-slate-400 mb-0.5">
+                  <span class="truncate max-w-[65%]">${p.category}</span>
+                  <div class="flex items-center gap-0.5 text-amber-500 font-bold shrink-0">
+                    <i data-lucide="star" class="w-3 h-3 fill-amber-400"></i>
+                    <span>${p.rating}</span>
+                  </div>
+                </div>
+
+                <!-- Title -->
+                <h3 class="text-xs sm:text-[13px] font-bold text-slate-800 line-clamp-2 leading-snug group-hover:text-emerald-700 transition" title="${p.title}">
+                  ${p.title}
+                </h3>
+              </div>
+
+              <div>
+                <!-- Nasiya (Uzum style) badge -->
+                ${p.nasiya ? `
+                  <div class="bg-indigo-50 border border-indigo-100 rounded-lg px-1.5 py-0.5 text-[9px] sm:text-[10px] text-indigo-900 font-bold flex items-center justify-between mb-1.5">
+                    <span>Nasiya:</span>
+                    <span>${formatSum(p.nasiyaPrice)}/oy</span>
+                  </div>
+                ` : `
+                  <div class="text-[9px] sm:text-[10px] text-emerald-700 font-semibold mb-1.5 flex items-center gap-1">
+                    <i data-lucide="check" class="w-3 h-3"></i> Omborda mavjud
+                  </div>
+                `}
+
+                <!-- Price & Add Action -->
+                <div class="flex items-end justify-between gap-1 pt-1 border-t border-slate-100">
+                  <div class="min-w-0">
+                    ${p.oldPrice ? `<div class="text-[9px] sm:text-[10px] text-slate-400 line-through leading-none">${formatSum(p.oldPrice)}</div>` : ''}
+                    <div class="text-xs sm:text-sm font-black text-slate-900 leading-tight truncate">
+                      ${formatSum(p.price)}
+                    </div>
+                  </div>
+
+                  <!-- Counter or Add Button -->
+                  <div class="shrink-0">
+                    ${inCartCount === 0 ? `
+                      <button onclick="addToCart(${p.id})" class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-emerald-600 hover:bg-emerald-700 active:bg-emerald-800 text-white flex items-center justify-center transition shadow-2xs tap-effect" aria-label="Savatga qo'shish">
+                        <i data-lucide="plus" class="w-4 h-4"></i>
+                      </button>
+                    ` : `
+                      <div class="flex items-center bg-emerald-50 border border-emerald-300 rounded-xl overflow-hidden text-xs font-black text-emerald-950 shadow-2xs">
+                        <button onclick="changeCartCount(${p.id}, -1)" class="w-6 h-7 sm:w-7 sm:h-8 flex items-center justify-center hover:bg-emerald-200 text-emerald-800 tap-effect">&minus;</button>
+                        <span class="px-1 text-[11px] sm:text-xs">${inCartCount}</span>
+                        <button onclick="changeCartCount(${p.id}, 1)" class="w-6 h-7 sm:w-7 sm:h-8 flex items-center justify-center hover:bg-emerald-200 text-emerald-800 tap-effect">+</button>
+                      </div>
+                    `}
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+        `;
+      }).join('');
+
+      lucide.createIcons();
+    }
+
+    // CART STATE LOGIC
+    function addToCart(id) {
+      cart[id] = 1;
+      const product = PRODUCTS.find(p => p.id === id);
+      if (product) {
+        showToast(`🛒 "${product.title}" savatga qo'shildi!`);
+      }
+      updateCartUI();
+      renderProducts();
+    }
+
+    function changeCartCount(id, delta) {
+      if (!cart[id]) return;
+      cart[id] += delta;
+      if (cart[id] <= 0) {
+        delete cart[id];
+      }
+      updateCartUI();
+      renderProducts();
+    }
+
+    function updateCartUI() {
+      const countBadge = document.getElementById('cartCountBadge');
+      const mobileBadge = document.getElementById('mobileCartBadge');
+      const mCartNavBadge = document.getElementById('mCartNavBadge');
+      const headerTotal = document.getElementById('cartHeaderTotal');
+      const totalItemsCount = document.getElementById('cartTotalItemsCount');
+      const subtotalEl = document.getElementById('cartSubtotal');
+      const finalTotalEl = document.getElementById('cartFinalTotal');
+      const nasiyaEl = document.getElementById('cartNasiyaEstimation');
+      const checkoutBtn = document.getElementById('checkoutBtn');
+
+      let totalItems = 0;
+      let totalPrice = 0;
+
+      for (let id in cart) {
+        const item = PRODUCTS.find(p => p.id == id);
+        if (item) {
+          totalItems += cart[id];
+          totalPrice += item.price * cart[id];
+        }
+      }
+
+      // Update badge counts
+      if (countBadge) countBadge.innerText = totalItems;
+      
+      [mobileBadge, mCartNavBadge].forEach(b => {
+        if (b) {
+          b.innerText = totalItems;
+          if (totalItems > 0) b.classList.remove('hidden');
+          else b.classList.add('hidden');
+        }
+      });
+
+      if (headerTotal) headerTotal.innerText = formatSum(totalPrice);
+      if (totalItemsCount) totalItemsCount.innerText = totalItems;
+      if (subtotalEl) subtotalEl.innerText = formatSum(totalPrice);
+      if (finalTotalEl) finalTotalEl.innerText = formatSum(totalPrice);
+      
+      const modalTot = document.getElementById('modalCheckoutTotal');
+      if (modalTot) modalTot.innerText = formatSum(totalPrice);
+
+      if (totalPrice > 0) {
+        if (checkoutBtn) checkoutBtn.removeAttribute('disabled');
+        const estNasiya = Math.round(totalPrice / 12 * 1.05);
+        if (nasiyaEl) nasiyaEl.innerHTML = `yoki Savatcha Nasiya bilan <b>${formatSum(estNasiya)} / oy</b>`;
+      } else {
+        if (checkoutBtn) checkoutBtn.setAttribute('disabled', 'true');
+        if (nasiyaEl) nasiyaEl.innerHTML = `yoki Savatcha Nasiya bilan <b>0 so'm/oy</b>`;
+      }
+
+      renderCartDrawerItems();
+    }
+
+    // CART SPLIT RENDER (KORZINKA ⚡ + UZUM 📦 HYBRID LOGIC)
+    function renderCartDrawerItems() {
+      const container = document.getElementById('cartItemsContainer');
+      const items = Object.keys(cart).map(id => PRODUCTS.find(p => p.id == id)).filter(Boolean);
+
+      if (items.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-16">
+            <div class="w-16 h-16 bg-slate-100 rounded-2xl flex items-center justify-center mx-auto text-3xl mb-2">🛒</div>
+            <p class="font-bold text-slate-800 text-sm">Savatchangiz bo'sh</p>
+            <p class="text-xs text-slate-400 mt-1">Oziq-ovqat yoki bozor tovarlarini qo'shing</p>
+          </div>
+        `;
+        return;
+      }
+
+      const expressItems = items.filter(p => p.type === 'express');
+      const marketItems = items.filter(p => p.type === 'market');
+
+      let html = '';
+
+      // Express group
+      if (expressItems.length > 0) {
+        html += `
+          <div class="bg-amber-50/80 border border-amber-200/90 rounded-2xl p-3 space-y-2">
+            <div class="flex items-center justify-between text-xs font-black text-amber-950 border-b border-amber-200/80 pb-1.5">
+              <span class="flex items-center gap-1.5">
+                <span>⚡</span> 1-jo'natma: Tezkor Kuryer (20 daqiqa)
+              </span>
+              <span class="text-[9px] bg-amber-200 text-amber-950 px-1.5 py-0.5 rounded font-black">Darkstore</span>
+            </div>
+            ${expressItems.map(p => renderCartItemRow(p)).join('')}
+          </div>
+        `;
+      }
+
+      // Marketplace group
+      if (marketItems.length > 0) {
+        html += `
+          <div class="bg-indigo-50/80 border border-indigo-200/90 rounded-2xl p-3 space-y-2">
+            <div class="flex items-center justify-between text-xs font-black text-indigo-950 border-b border-indigo-200/80 pb-1.5">
+              <span class="flex items-center gap-1.5">
+                <span>📦</span> 2-jo'natma: Katta Bozor (Ertaga PVZ ga)
+              </span>
+              <span class="text-[9px] bg-indigo-200 text-indigo-950 px-1.5 py-0.5 rounded font-black">Ombor</span>
+            </div>
+            ${marketItems.map(p => renderCartItemRow(p)).join('')}
+          </div>
+        `;
+      }
+
+      container.innerHTML = html;
+      lucide.createIcons();
+    }
+
+    function renderCartItemRow(p) {
+      const count = cart[p.id];
+      return `
+        <div class="flex items-center justify-between gap-2.5 py-1.5 border-b border-black/5 last:border-b-0">
+          <img src="${p.image}" class="w-11 h-11 object-cover rounded-xl border border-slate-200 shrink-0" />
+          <div class="flex-1 min-w-0">
+            <h4 class="text-xs font-bold text-slate-800 truncate">${p.title}</h4>
+            <div class="text-[11px] font-extrabold text-emerald-800">${formatSum(p.price)}</div>
+          </div>
+          <div class="flex items-center bg-white border border-slate-200 rounded-lg overflow-hidden text-xs font-bold shadow-2xs">
+            <button onclick="changeCartCount(${p.id}, -1)" class="w-6 h-6 flex items-center justify-center hover:bg-slate-100 tap-effect">&minus;</button>
+            <span class="px-2 text-[11px]">${count}</span>
+            <button onclick="changeCartCount(${p.id}, 1)" class="w-6 h-6 flex items-center justify-center hover:bg-slate-100 tap-effect">+</button>
+          </div>
+        </div>
+      `;
+    }
+
+    // FAVORITES
+    function toggleFavorite(id) {
+      if (favorites.has(id)) {
+        favorites.delete(id);
+      } else {
+        favorites.add(id);
+        const item = PRODUCTS.find(p => p.id === id);
+        if (item) showToast(`❤️ "${item.title}" saralanganga qo'shildi!`);
+      }
+
+      const favCountEl = document.getElementById('favCount');
+      const mFavBadge = document.getElementById('mFavBadge');
+
+      [favCountEl, mFavBadge].forEach(b => {
+        if (b) {
+          b.innerText = favorites.size;
+          if (favorites.size > 0) b.classList.remove('hidden');
+          else b.classList.add('hidden');
+        }
+      });
+
+      renderProducts();
+    }
+
+    function filterFavorites() {
+      if (favorites.size === 0) {
+        showToast("ℹ️ Hali saralangan mahsulotlar yo'q!");
+        return;
+      }
+      const titleEl = document.getElementById('currentSectionTitle');
+      const subEl = document.getElementById('currentSectionSubtitle');
+      titleEl.innerText = "Saralangan mahsulotlar";
+      subEl.innerText = `${favorites.size} ta yoqtirgan tovaringiz`;
+
+      const grid = document.getElementById('productsGrid');
+      const filtered = PRODUCTS.filter(p => favorites.has(p.id));
+
+      grid.innerHTML = filtered.map(p => {
+        const inCartCount = cart[p.id] || 0;
+        return `
+          <div class="bg-white rounded-2xl border border-rose-200 hover:shadow-lg transition-all p-3 flex flex-col justify-between">
+            <div class="relative pt-[90%] bg-slate-100 rounded-xl overflow-hidden">
+              <img src="${p.image}" class="absolute inset-0 w-full h-full object-cover" />
+              <button onclick="toggleFavorite(${p.id})" class="absolute top-1.5 right-1.5 w-7 h-7 rounded-full bg-white flex items-center justify-center text-rose-500 shadow-2xs">
+                <i data-lucide="heart" class="w-4 h-4 fill-rose-500"></i>
+              </button>
+            </div>
+            <h4 class="text-xs font-bold text-slate-800 line-clamp-2 mt-2">${p.title}</h4>
+            <div class="flex items-center justify-between mt-2 pt-2 border-t border-slate-100">
+              <div class="font-extrabold text-xs text-slate-900">${formatSum(p.price)}</div>
+              <button onclick="addToCart(${p.id})" class="p-1.5 rounded-lg bg-emerald-600 text-white tap-effect">
+                <i data-lucide="plus" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      lucide.createIcons();
+    }
+
+    // CART DRAWER TOGGLE
+    function toggleCartDrawer() {
+      const drawer = document.getElementById('cartDrawer');
+      const backdrop = document.getElementById('cartDrawerBackdrop');
+      const isClosed = drawer.classList.contains('translate-x-full');
+
+      if (isClosed) {
+        backdrop.classList.remove('hidden');
+        setTimeout(() => {
+          backdrop.classList.remove('opacity-0');
+          drawer.classList.remove('translate-x-full');
+        }, 10);
+      } else {
+        backdrop.classList.add('opacity-0');
+        drawer.classList.add('translate-x-full');
+        setTimeout(() => {
+          backdrop.classList.add('hidden');
+        }, 300);
+      }
+    }
+
+    // MOBILE CATALOG DRAWER
+    function toggleMobileCatalog() {
+      const drawer = document.getElementById('mobileCatalogDrawer');
+      const backdrop = document.getElementById('mobileCatalogBackdrop');
+      const isClosed = drawer.classList.contains('-translate-x-full');
+
+      if (isClosed) {
+        backdrop.classList.remove('hidden');
+        setTimeout(() => {
+          backdrop.classList.remove('opacity-0');
+          drawer.classList.remove('-translate-x-full');
+        }, 10);
+      } else {
+        backdrop.classList.add('opacity-0');
+        drawer.classList.add('-translate-x-full');
+        setTimeout(() => {
+          backdrop.classList.add('hidden');
+        }, 300);
+      }
+    }
+
+    function selectMobileCat(cat) {
+      toggleMobileCatalog();
+      filterByCategory(cat);
+    }
+
+    function toggleCatalogDropdown() {
+      filterByCategory('Barchasi');
+      window.scrollTo({ top: 380, behavior: 'smooth' });
+    }
+
+    // MODAL HELPERS
+    function openModal(id) {
+      const modal = document.getElementById(id);
+      if (modal) modal.classList.remove('hidden');
+    }
+
+    function closeModal(id) {
+      const modal = document.getElementById(id);
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function startCheckout() {
+      toggleCartDrawer();
+      openModal('checkoutModal');
+    }
+
+    function handleOrderSubmit(e) {
+      e.preventDefault();
+      closeModal('checkoutModal');
+      cart = {};
+      updateCartUI();
+      renderProducts();
+      openModal('successModal');
+    }
+
+    // TOAST NOTIFICATIONS
+    function showToast(message) {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = "toast-anim bg-slate-950/90 backdrop-blur-md text-white text-xs font-bold px-4 py-2.5 rounded-xl shadow-xl flex items-center gap-2 border border-slate-700 pointer-events-auto";
+      toast.innerHTML = `<span>${message}</span>`;
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        toast.style.transition = 'opacity 0.3s ease';
+        setTimeout(() => toast.remove(), 300);
+      }, 2500);
+    }
+  </script>
+</body>
+</html>
